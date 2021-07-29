@@ -1,0 +1,21 @@
+{
+  "name": "JON Q DOE",
+  "address": {
+    "line": "1234 MAIN STREET",
+    "city": "CARMEL",
+    "state": "NY",
+    "postalCode": "10512"
+  },
+  "telecom": "123-456-7890",
+  "email": "jonqdoe@mail.com",
+  "coverage": {
+    "status": "active",
+    "subscriberId": "123456789",
+    "period": {
+      "start": "2021-01-01",
+      "end": "2022-12-31"
+    },
+    "payor": "X Healthcare Insurance"
+  },
+  "status": "active"
+}
