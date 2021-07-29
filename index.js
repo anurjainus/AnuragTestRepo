@@ -417,6 +417,7 @@ const RescheduleAppointmentPCB_Handler =  {
                 slotStatus += 'match. '
             } // else {
                 //
+      
         }
         if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') {
             slotStatus += 'which did not match any slot value. ';
