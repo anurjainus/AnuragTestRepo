@@ -520,6 +520,26 @@ const GetMyHealthPlanDetals_Handler =  {
     },
 };
 
+const GetPrescriptionDetail_Handler =  {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetPrescriptionDetail' ;
+    },
+    handle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        const responseBuilder = handlerInput.responseBuilder;
+        let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        let say = 'Hello from GetPrescriptionDetail. ';
+
+
+        return responseBuilder
+            .speak(say)
+            .reprompt('try again, ' + say)
+            .getResponse();
+    },
+};
+
 const LaunchRequest_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
@@ -966,6 +986,7 @@ exports.handler = skillBuilder
         GetMyClaimDetails_Handler, 
         ExplainMyOutOfPocketExpanses_Handler, 
         GetMyHealthPlanDetals_Handler, 
+        GetPrescriptionDetail_Handler, 
         LaunchRequest_Handler, 
         SessionEndedHandler
     )
@@ -1143,6 +1164,20 @@ const model = {
           "samples": [
             "health plan",
             "my health plan"
+          ]
+        },
+        {
+          "name": "GetPrescriptionDetail",
+          "slots": [],
+          "samples": [
+            "prescription detail",
+            "prescription details",
+            "details of prescription",
+            "detail of prescription",
+            "details of last prescription",
+            "detail of last prescription",
+            "last prescription details",
+            "last prescription detail"
           ]
         },
         {
