@@ -212,17 +212,17 @@ const GetMyRefillDates_Handler =  {
     },
 };
 
-const ScheduleAppointmentWithPCB_Handler =  {
+const ScheduleAppointment_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'ScheduleAppointmentWithPCB' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'ScheduleAppointment' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from ScheduleAppointmentWithPCB. ';
+        let say = 'Hello from ScheduleAppointment. ';
 
         let slotStatus = '';
         let resolvedSlot;
@@ -252,80 +252,7 @@ const ScheduleAppointmentWithPCB_Handler =  {
         }
 
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointmentWithPCB','profession'), 'or');
-        }
-
-        say += slotStatus;
-
-
-        return responseBuilder
-            .speak(say)
-            .reprompt('try again, ' + say)
-            .getResponse();
-    },
-};
-
-const CheckAppointmentScheduled_Handler =  {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'CheckAppointmentScheduled' ;
-    },
-    handle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        const responseBuilder = handlerInput.responseBuilder;
-        let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-        let say = 'Hello from CheckAppointmentScheduled. ';
-
-
-        return responseBuilder
-            .speak(say)
-            .reprompt('try again, ' + say)
-            .getResponse();
-    },
-};
-
-const CancelAppointmentPCB_Handler =  {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'CancelAppointmentPCB' ;
-    },
-    handle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        const responseBuilder = handlerInput.responseBuilder;
-        let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
-        let say = 'Hello from CancelAppointmentPCB. ';
-
-        let slotStatus = '';
-        let resolvedSlot;
-
-        let slotValues = getSlotValues(request.intent.slots); 
-        // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
-
-        // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
-        //   SLOT: typeOfCheckup 
-        if (slotValues.typeOfCheckup.heardAs) {
-            slotStatus += ' slot typeOfCheckup was heard as ' + slotValues.typeOfCheckup.heardAs + '. ';
-        } else {
-            slotStatus += 'slot typeOfCheckup is empty. ';
-        }
-        if (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.typeOfCheckup.resolved !== slotValues.typeOfCheckup.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.typeOfCheckup.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.typeOfCheckup.heardAs + '" to the custom slot type used by slot typeOfCheckup! '); 
-        }
-
-        if( (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.typeOfCheckup.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointmentPCB','typeOfCheckup'), 'or');
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','profession'), 'or');
         }
         //   SLOT: appointmentDate 
         if (slotValues.appointmentDate.heardAs) {
@@ -348,7 +275,7 @@ const CancelAppointmentPCB_Handler =  {
         }
 
         if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointmentPCB','appointmentDate'), 'or');
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','appointmentDate'), 'or');
         }
 
         say += slotStatus;
@@ -361,17 +288,37 @@ const CancelAppointmentPCB_Handler =  {
     },
 };
 
-const RescheduleAppointmentPCB_Handler =  {
+const CheckScheduledAppointment_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'RescheduleAppointmentPCB' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'CheckScheduledAppointment' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from RescheduleAppointmentPCB. ';
+        let say = 'Hello from CheckScheduledAppointment. ';
+
+
+        return responseBuilder
+            .speak(say)
+            .reprompt('try again, ' + say)
+            .getResponse();
+    },
+};
+
+const CancelAppointment_Handler =  {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' && request.intent.name === 'CancelAppointment' ;
+    },
+    handle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        const responseBuilder = handlerInput.responseBuilder;
+        let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        let say = 'Hello from CancelAppointment. ';
 
         let slotStatus = '';
         let resolvedSlot;
@@ -380,28 +327,104 @@ const RescheduleAppointmentPCB_Handler =  {
         // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
 
         // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
-        //   SLOT: typeOfCheckup 
-        if (slotValues.typeOfCheckup.heardAs) {
-            slotStatus += ' slot typeOfCheckup was heard as ' + slotValues.typeOfCheckup.heardAs + '. ';
+        //   SLOT: profession 
+        if (slotValues.profession.heardAs) {
+            slotStatus += ' slot profession was heard as ' + slotValues.profession.heardAs + '. ';
         } else {
-            slotStatus += 'slot typeOfCheckup is empty. ';
+            slotStatus += 'slot profession is empty. ';
         }
-        if (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_MATCH') {
+        if (slotValues.profession.ERstatus === 'ER_SUCCESS_MATCH') {
             slotStatus += 'a valid ';
-            if(slotValues.typeOfCheckup.resolved !== slotValues.typeOfCheckup.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.typeOfCheckup.resolved + '. '; 
+            if(slotValues.profession.resolved !== slotValues.profession.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.profession.resolved + '. '; 
                 } else {
                 slotStatus += 'match. '
             } // else {
                 //
         }
-        if (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+        if (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') {
             slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.typeOfCheckup.heardAs + '" to the custom slot type used by slot typeOfCheckup! '); 
+            console.log('***** consider adding "' + slotValues.profession.heardAs + '" to the custom slot type used by slot profession! '); 
         }
 
-        if( (slotValues.typeOfCheckup.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.typeOfCheckup.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointmentPCB','typeOfCheckup'), 'or');
+        if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','profession'), 'or');
+        }
+        //   SLOT: appointmentDate 
+        if (slotValues.appointmentDate.heardAs) {
+            slotStatus += ' slot appointmentDate was heard as ' + slotValues.appointmentDate.heardAs + '. ';
+        } else {
+            slotStatus += 'slot appointmentDate is empty. ';
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_MATCH') {
+            slotStatus += 'a valid ';
+            if(slotValues.appointmentDate.resolved !== slotValues.appointmentDate.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.appointmentDate.resolved + '. '; 
+                } else {
+                slotStatus += 'match. '
+            } // else {
+                //
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+            slotStatus += 'which did not match any slot value. ';
+            console.log('***** consider adding "' + slotValues.appointmentDate.heardAs + '" to the custom slot type used by slot appointmentDate! '); 
+        }
+
+        if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','appointmentDate'), 'or');
+        }
+
+        say += slotStatus;
+
+
+        return responseBuilder
+            .speak(say)
+            .reprompt('try again, ' + say)
+            .getResponse();
+    },
+};
+
+const RescheduleAppointment_Handler =  {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' && request.intent.name === 'RescheduleAppointment' ;
+    },
+    handle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        const responseBuilder = handlerInput.responseBuilder;
+        let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+
+        let say = 'Hello from RescheduleAppointment. ';
+
+        let slotStatus = '';
+        let resolvedSlot;
+
+        let slotValues = getSlotValues(request.intent.slots); 
+        // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
+
+        // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
+        //   SLOT: profession 
+        if (slotValues.profession.heardAs) {
+            slotStatus += ' slot profession was heard as ' + slotValues.profession.heardAs + '. ';
+        } else {
+            slotStatus += 'slot profession is empty. ';
+        }
+        if (slotValues.profession.ERstatus === 'ER_SUCCESS_MATCH') {
+            slotStatus += 'a valid ';
+            if(slotValues.profession.resolved !== slotValues.profession.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.profession.resolved + '. '; 
+                } else {
+                slotStatus += 'match. '
+            } // else {
+                //
+        }
+        if (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+            slotStatus += 'which did not match any slot value. ';
+            console.log('***** consider adding "' + slotValues.profession.heardAs + '" to the custom slot type used by slot profession! '); 
+        }
+
+        if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','profession'), 'or');
         }
         //   SLOT: dateOfAppointment 
         if (slotValues.dateOfAppointment.heardAs) {
@@ -417,7 +440,6 @@ const RescheduleAppointmentPCB_Handler =  {
                 slotStatus += 'match. '
             } // else {
                 //
-      
         }
         if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') {
             slotStatus += 'which did not match any slot value. ';
@@ -425,7 +447,7 @@ const RescheduleAppointmentPCB_Handler =  {
         }
 
         if( (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.dateOfAppointment.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointmentPCB','dateOfAppointment'), 'or');
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','dateOfAppointment'), 'or');
         }
 
         say += slotStatus;
@@ -469,39 +491,6 @@ const ExplainMyOutOfPocketExpanses_Handler =  {
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
         let say = 'Hello from ExplainMyOutOfPocketExpanses. ';
-
-        let slotStatus = '';
-        let resolvedSlot;
-
-        let slotValues = getSlotValues(request.intent.slots); 
-        // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
-
-        // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
-        //   SLOT: amount 
-        if (slotValues.amount.heardAs) {
-            slotStatus += ' slot amount was heard as ' + slotValues.amount.heardAs + '. ';
-        } else {
-            slotStatus += 'slot amount is empty. ';
-        }
-        if (slotValues.amount.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.amount.resolved !== slotValues.amount.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.amount.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.amount.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.amount.heardAs + '" to the custom slot type used by slot amount! '); 
-        }
-
-        if( (slotValues.amount.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.amount.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ExplainMyOutOfPocketExpanses','amount'), 'or');
-        }
-
-        say += slotStatus;
 
 
         return responseBuilder
@@ -970,10 +959,10 @@ exports.handler = skillBuilder
         AMAZON_FallbackIntent_Handler, 
         GetMyOutOfPocketExpenses_Handler, 
         GetMyRefillDates_Handler, 
-        ScheduleAppointmentWithPCB_Handler, 
-        CheckAppointmentScheduled_Handler, 
-        CancelAppointmentPCB_Handler, 
-        RescheduleAppointmentPCB_Handler, 
+        ScheduleAppointment_Handler, 
+        CheckScheduledAppointment_Handler, 
+        CancelAppointment_Handler, 
+        RescheduleAppointment_Handler, 
         GetMyClaimDetails_Handler, 
         ExplainMyOutOfPocketExpanses_Handler, 
         GetMyHealthPlanDetals_Handler, 
@@ -1040,49 +1029,28 @@ const model = {
           "name": "GetMyOutOfPocketExpenses",
           "slots": [],
           "samples": [
-            "Can you check the deducted amount details",
-            "Can you check the out of pocket expanse details"
+            "deducted amount",
+            "out of pocket expenses",
+            "my deducted amount",
+            "out of pocket expense"
           ]
         },
         {
           "name": "GetMyRefillDates",
           "slots": [],
           "samples": [
-            "Get me my scheduled refill date",
-            "Can you check my refill date",
-            "Get me my medication details and refill date",
-            "Can you please check my medication details and let me know if I have any refill scheduled"
+            "refill date scheduled",
+            "scheduled refill date",
+            "refill date",
+            "medication details and refill date",
+            "medication details"
           ]
         },
         {
-          "name": "ScheduleAppointmentWithPCB",
+          "name": "ScheduleAppointment",
           "slots": [
             {
               "name": "profession",
-              "type": "AMAZON.ProfessionalType"
-            }
-          ],
-          "samples": [
-            "Can you please book an appointment with an {profession}",
-            "Can you please book an appointment with an {profession} for eye check up",
-            "Can you please book an appointment with a {profession} for dental check up",
-            "Can you please book an appointment with the {profession} for routine check up"
-          ]
-        },
-        {
-          "name": "CheckAppointmentScheduled",
-          "slots": [],
-          "samples": [
-            "when is my scheduled appointment",
-            "Tell me about my scheduled appointments",
-            "Can you check if I have any appointment scheduled"
-          ]
-        },
-        {
-          "name": "CancelAppointmentPCB",
-          "slots": [
-            {
-              "name": "typeOfCheckup",
               "type": "AMAZON.ProfessionalType"
             },
             {
@@ -1091,16 +1059,43 @@ const model = {
             }
           ],
           "samples": [
-            "Can you cancel my appointment with {typeOfCheckup}",
-            "Can you cancel my appointment",
-            "Can you cancel my appointment with {typeOfCheckup} on {appointmentDate}"
+            "schedule appointment with {profession} on {appointmentDate}",
+            "book appointment with {profession} on {appointmentDate}"
           ]
         },
         {
-          "name": "RescheduleAppointmentPCB",
+          "name": "CheckScheduledAppointment",
+          "slots": [],
+          "samples": [
+            "scheduled appointment",
+            "scheduled appointments",
+            "appointment scheduled"
+          ]
+        },
+        {
+          "name": "CancelAppointment",
           "slots": [
             {
-              "name": "typeOfCheckup",
+              "name": "profession",
+              "type": "AMAZON.ProfessionalType"
+            },
+            {
+              "name": "appointmentDate",
+              "type": "AMAZON.DATE"
+            }
+          ],
+          "samples": [
+            "appointment on {appointmentDate} with {profession} be cancelled",
+            "appointment with {profession} on {appointmentDate} be cancelled",
+            "cancel appointment with {profession} on {appointmentDate}",
+            "cancel appointment on {appointmentDate} with {profession}"
+          ]
+        },
+        {
+          "name": "RescheduleAppointment",
+          "slots": [
+            {
+              "name": "profession",
               "type": "AMAZON.ProfessionalType"
             },
             {
@@ -1109,44 +1104,45 @@ const model = {
             }
           ],
           "samples": [
-            "Can you reschedule my appointment on {dateOfAppointment}",
-            "Can you reschedule my appointment with {typeOfCheckup} on {dateOfAppointment}",
-            "Can you reschedule my appointment with {typeOfCheckup} ",
-            "Can you reschedule my appointment on"
+            "appointment with {profession}  on {dateOfAppointment} be rescheduled",
+            "appointment on {dateOfAppointment} with {profession} be rescheduled",
+            "reschedule appointment on {dateOfAppointment} with {profession}",
+            "reschedule appointment with {profession} on {dateOfAppointment}"
           ]
         },
         {
           "name": "GetMyClaimDetails",
           "slots": [],
           "samples": [
-            "Can you give me details on my last claim",
-            "hwo much was I charged in my last claim",
-            "when was my last claim done",
-            "Can you check my last claim details"
+            "my last claim details",
+            "charged in my last claim",
+            "details on my last claim done",
+            "details my last claim"
           ]
         },
         {
           "name": "ExplainMyOutOfPocketExpanses",
-          "slots": [
-            {
-              "name": "amount",
-              "type": ""
-            }
-          ],
+          "slots": [],
           "samples": [
-            "Can you please explain why I paid for the last claim",
-            "Can you please explain why I was charged {amount} in my last claim",
-            "Can you check why I paid for the last claim",
-            "Can you check why I was charged {amount} in my last claim"
+            "why not paid by insurance company",
+            "why not covered by insurance company",
+            "why I have to pay",
+            "explained last claim",
+            "more details last claim",
+            "explain out of pocket expenses",
+            "explain last claim",
+            "explain paid for the last claim",
+            "explain why I was charged in my last claim",
+            "why I paid for the last claim",
+            "explain charges in last claim"
           ]
         },
         {
           "name": "GetMyHealthPlanDetals",
           "slots": [],
           "samples": [
-            "Can you tell me about my health plan",
-            "Can you check if my health plan is active",
-            "Can you check my health plan details"
+            "health plan",
+            "my health plan"
           ]
         },
         {
