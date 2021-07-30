@@ -448,8 +448,7 @@ const GetMyClaimDetails_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyClaimDetails. ';
-
+        let say = 'Your last claim was paid on 07/26/2021 and the covered amount is $500.';
 
         return responseBuilder
             .speak(say)
@@ -468,7 +467,7 @@ const ExplainMyOutOfPocketExpanses_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from ExplainMyOutOfPocketExpanses. ';
+        let say = 'The total claimed amount was $1400, deductible was $300, co-pay is $100 and Co-Insurance is 10%. So your Out Of Pocket Expanses was 500$.';
 
         let slotStatus = '';
         let resolvedSlot;
@@ -479,7 +478,7 @@ const ExplainMyOutOfPocketExpanses_Handler =  {
         // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
         //   SLOT: amount
         if (slotValues.amount.heardAs) {
-            slotStatus += ' slot amount was heard as ' + slotValues.amount.heardAs + '. ';
+            slotStatus += ' Your deductible was $300 and your copay is $100 and your co-insurance is 10%. These all come under your out of pocket amount.';
         } else {
             slotStatus += 'slot amount is empty. ';
         }
@@ -521,8 +520,7 @@ const GetMyHealthPlanDetals_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyHealthPlanDetals. ';
-
+        let say = 'Your current plan is active and the plan renew date is 01/01/2023';
 
         return responseBuilder
             .speak(say)
