@@ -1,0 +1,22 @@
+{
+  "accountName": "JON Q DOE",
+  "accountNumber": "654231",
+  "statementDate": "07/01/2021",
+  "dueDate": "08/01/2021",
+  "serviceDetails": {
+    "encounter": "123456789",
+    "location": "Highland park hospital",
+    "dateOfService": "6/15/2021 to 6/30/2021",
+    "service": "Speech therapy",
+    "status": "paid",
+    "charges": "$1400",
+    "deductible": "$300",
+    "copay": "$100",
+    "coInsurance": "10%",
+    "amtPaidByInsCompany": "$900",
+    "patientBalance": "300$",
+    "amtToBePaidByPatient": "300$",
+    "amountDue": "300$",
+	"paidDate":"6/30/2021"
+  }
+}
