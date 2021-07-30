@@ -123,7 +123,7 @@ const HelloWorldIntent_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from HelloWorldIntent. ';
+        let say = 'Hello Anurag! What can I help you with? ';
 
 
         return responseBuilder
@@ -1132,17 +1132,19 @@ const model = {
           ]
         },
         {
-          "name": "GetMyClaimDetails",
+          "name": "GetMyLastClaimDetails",
           "slots": [],
           "samples": [
             "my last claim details",
             "charged in my last claim",
             "details on my last claim done",
-            "details my last claim"
+            "details my last claim",
+	    "detail last claim",
+	    "last claim detail"
           ]
         },
         {
-          "name": "ExplainMyOutOfPocketExpanses",
+          "name": "ExplainMyOutOfPocketExpenses",
           "slots": [],
           "samples": [
             "why not paid by insurance company",
@@ -1159,7 +1161,7 @@ const model = {
           ]
         },
         {
-          "name": "GetMyHealthPlanDetals",
+          "name": "GetMyHealthPlanDetails",
           "slots": [],
           "samples": [
             "health plan",
@@ -1167,7 +1169,7 @@ const model = {
           ]
         },
         {
-          "name": "GetPrescriptionDetail",
+          "name": "GetPrescriptionDetails",
           "slots": [],
           "samples": [
             "prescription detail",
