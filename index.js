@@ -4,8 +4,10 @@
 const Alexa = require("ask-sdk");
 const https = require("https");
 
+var myLastPrescriptionDetails = require('./data/myLastPrescriptionDetails.json');
+var myRefillDates = require('./data/myRefillDates.json');
 
-
+console.log(myLastPrescriptionDetails);
 const invocationName = "optum health info";
 
 // Session Attributes 
@@ -123,7 +125,7 @@ const HelloWorldIntent_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello Anurag! What can I help you with? ';
+        let say = 'Hello from HelloWorldIntent. ';
 
 
         return responseBuilder
@@ -201,7 +203,7 @@ const GetMyRefillDates_Handler =  {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
+        console.log(myLastPrescriptionDetails);
         let say = 'Hello from GetMyRefillDates. ';
 
 
@@ -470,7 +472,7 @@ const GetMyClaimDetails_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyClaimDetails. ';
+        let say = 'Your last claim was paid on 07/26/2021 and the covered amount is $500.';
 
 
         return responseBuilder
@@ -490,7 +492,7 @@ const ExplainMyOutOfPocketExpanses_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from ExplainMyOutOfPocketExpanses. ';
+        let say = 'The total claimed amount was $1400, deductible was $300, co-pay is $100 and Co-Insurance is 10%. So your Out Of Pocket Expanses was 500$.';
 
 
         return responseBuilder
@@ -510,8 +512,7 @@ const GetMyHealthPlanDetals_Handler =  {
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyHealthPlanDetals. ';
-
+        let say = 'Your current plan is active and the plan renew date is 01/01/2023';
 
         return responseBuilder
             .speak(say)
@@ -1132,19 +1133,17 @@ const model = {
           ]
         },
         {
-          "name": "GetMyLastClaimDetails",
+          "name": "GetMyClaimDetails",
           "slots": [],
           "samples": [
             "my last claim details",
             "charged in my last claim",
             "details on my last claim done",
-            "details my last claim",
-	    "detail last claim",
-	    "last claim detail"
+            "details my last claim"
           ]
         },
         {
-          "name": "ExplainMyOutOfPocketExpenses",
+          "name": "ExplainMyOutOfPocketExpanses",
           "slots": [],
           "samples": [
             "why not paid by insurance company",
@@ -1161,7 +1160,7 @@ const model = {
           ]
         },
         {
-          "name": "GetMyHealthPlanDetails",
+          "name": "GetMyHealthPlanDetals",
           "slots": [],
           "samples": [
             "health plan",
@@ -1169,7 +1168,7 @@ const model = {
           ]
         },
         {
-          "name": "GetPrescriptionDetails",
+          "name": "GetPrescriptionDetail",
           "slots": [],
           "samples": [
             "prescription detail",
