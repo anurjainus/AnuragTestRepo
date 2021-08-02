@@ -4,10 +4,8 @@
 const Alexa = require("ask-sdk");
 const https = require("https");
 
-var myLastPrescriptionDetails = require('./data/myLastPrescriptionDetails.json');
-var myRefillDates = require('./data/myRefillDates.json');
 
-console.log(myLastPrescriptionDetails);
+
 const invocationName = "optum health info";
 
 // Session Attributes 
@@ -203,7 +201,7 @@ const GetMyRefillDates_Handler =  {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        console.log(myLastPrescriptionDetails);
+
         let say = 'Hello from GetMyRefillDates. ';
 
 
@@ -462,17 +460,17 @@ const RescheduleAppointment_Handler =  {
     },
 };
 
-const GetMyClaimDetails_Handler =  {
+const GetMyLastClaimDetails_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetMyClaimDetails' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetMyLastClaimDetails' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Your last claim was paid on 07/26/2021 and the covered amount is $500.';
+        let say = 'Hello from GetMyLastClaimDetails. ';
 
 
         return responseBuilder
@@ -482,17 +480,17 @@ const GetMyClaimDetails_Handler =  {
     },
 };
 
-const ExplainMyOutOfPocketExpanses_Handler =  {
+const ExplainMyOutOfPocketExpenses_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'ExplainMyOutOfPocketExpanses' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'ExplainMyOutOfPocketExpenses' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'The total claimed amount was $1400, deductible was $300, co-pay is $100 and Co-Insurance is 10%. So your Out Of Pocket Expanses was 500$.';
+        let say = 'Hello from ExplainMyOutOfPocketExpenses. ';
 
 
         return responseBuilder
@@ -502,17 +500,18 @@ const ExplainMyOutOfPocketExpanses_Handler =  {
     },
 };
 
-const GetMyHealthPlanDetals_Handler =  {
+const GetMyHealthPlanDetails_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetMyHealthPlanDetals' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetMyHealthPlanDetails' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Your current plan is active and the plan renew date is 01/01/2023';
+        let say = 'Hello from GetMyHealthPlanDetails. ';
+
 
         return responseBuilder
             .speak(say)
@@ -521,17 +520,17 @@ const GetMyHealthPlanDetals_Handler =  {
     },
 };
 
-const GetPrescriptionDetail_Handler =  {
+const GetPrescriptionDetails_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetPrescriptionDetail' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetPrescriptionDetails' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetPrescriptionDetail. ';
+        let say = 'Hello from GetPrescriptionDetails. ';
 
 
         return responseBuilder
@@ -984,10 +983,10 @@ exports.handler = skillBuilder
         CheckScheduledAppointment_Handler, 
         CancelAppointment_Handler, 
         RescheduleAppointment_Handler, 
-        GetMyClaimDetails_Handler, 
-        ExplainMyOutOfPocketExpanses_Handler, 
-        GetMyHealthPlanDetals_Handler, 
-        GetPrescriptionDetail_Handler, 
+        GetMyLastClaimDetails_Handler, 
+        ExplainMyOutOfPocketExpenses_Handler, 
+        GetMyHealthPlanDetails_Handler, 
+        GetPrescriptionDetails_Handler, 
         LaunchRequest_Handler, 
         SessionEndedHandler
     )
@@ -1133,9 +1132,10 @@ const model = {
           ]
         },
         {
-          "name": "GetMyClaimDetails",
+          "name": "GetMyLastClaimDetails",
           "slots": [],
           "samples": [
+            "detail last claim",
             "my last claim details",
             "charged in my last claim",
             "details on my last claim done",
@@ -1143,9 +1143,10 @@ const model = {
           ]
         },
         {
-          "name": "ExplainMyOutOfPocketExpanses",
+          "name": "ExplainMyOutOfPocketExpenses",
           "slots": [],
           "samples": [
+            "explain out of pocket",
             "why not paid by insurance company",
             "why not covered by insurance company",
             "why I have to pay",
@@ -1160,7 +1161,7 @@ const model = {
           ]
         },
         {
-          "name": "GetMyHealthPlanDetals",
+          "name": "GetMyHealthPlanDetails",
           "slots": [],
           "samples": [
             "health plan",
@@ -1168,7 +1169,7 @@ const model = {
           ]
         },
         {
-          "name": "GetPrescriptionDetail",
+          "name": "GetMyPrescriptionDetails",
           "slots": [],
           "samples": [
             "prescription detail",
