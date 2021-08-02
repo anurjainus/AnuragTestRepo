@@ -12,8 +12,8 @@
     "status": "active",
     "subscriberId": "123456789",
     "period": {
-      "start": "2021-01-01",
-      "end": "2022-12-31"
+      "start": "01/01/2021",
+      "end": "12/31/2022"
     },
     "payor": "X Healthcare Insurance"
   },
