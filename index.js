@@ -254,29 +254,6 @@ const ScheduleAppointment_Handler =  {
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','profession'), 'or');
         }
-        //   SLOT: appointmentDate 
-        if (slotValues.appointmentDate.heardAs) {
-            slotStatus += ' slot appointmentDate was heard as ' + slotValues.appointmentDate.heardAs + '. ';
-        } else {
-            slotStatus += 'slot appointmentDate is empty. ';
-        }
-        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.appointmentDate.resolved !== slotValues.appointmentDate.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.appointmentDate.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.appointmentDate.heardAs + '" to the custom slot type used by slot appointmentDate! '); 
-        }
-
-        if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','appointmentDate'), 'or');
-        }
 
         say += slotStatus;
 
@@ -350,29 +327,6 @@ const CancelAppointment_Handler =  {
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','profession'), 'or');
         }
-        //   SLOT: appointmentDate 
-        if (slotValues.appointmentDate.heardAs) {
-            slotStatus += ' slot appointmentDate was heard as ' + slotValues.appointmentDate.heardAs + '. ';
-        } else {
-            slotStatus += 'slot appointmentDate is empty. ';
-        }
-        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.appointmentDate.resolved !== slotValues.appointmentDate.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.appointmentDate.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.appointmentDate.heardAs + '" to the custom slot type used by slot appointmentDate! '); 
-        }
-
-        if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','appointmentDate'), 'or');
-        }
 
         say += slotStatus;
 
@@ -425,29 +379,6 @@ const RescheduleAppointment_Handler =  {
 
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','profession'), 'or');
-        }
-        //   SLOT: dateOfAppointment 
-        if (slotValues.dateOfAppointment.heardAs) {
-            slotStatus += ' slot dateOfAppointment was heard as ' + slotValues.dateOfAppointment.heardAs + '. ';
-        } else {
-            slotStatus += 'slot dateOfAppointment is empty. ';
-        }
-        if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.dateOfAppointment.resolved !== slotValues.dateOfAppointment.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.dateOfAppointment.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.dateOfAppointment.heardAs + '" to the custom slot type used by slot dateOfAppointment! '); 
-        }
-
-        if( (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.dateOfAppointment.heardAs) ) {
-            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','dateOfAppointment'), 'or');
         }
 
         say += slotStatus;
@@ -520,17 +451,17 @@ const GetMyHealthPlanDetails_Handler =  {
     },
 };
 
-const GetPrescriptionDetails_Handler =  {
+const GetMyPrescriptionDetails_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetPrescriptionDetails' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetMyPrescriptionDetails' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetPrescriptionDetails. ';
+        let say = 'Hello from GetMyPrescriptionDetails. ';
 
 
         return responseBuilder
@@ -986,7 +917,7 @@ exports.handler = skillBuilder
         GetMyLastClaimDetails_Handler, 
         ExplainMyOutOfPocketExpenses_Handler, 
         GetMyHealthPlanDetails_Handler, 
-        GetPrescriptionDetails_Handler, 
+        GetMyPrescriptionDetails_Handler, 
         LaunchRequest_Handler, 
         SessionEndedHandler
     )
@@ -1073,15 +1004,13 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
-            },
-            {
-              "name": "appointmentDate",
-              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "schedule appointment with {profession} on {appointmentDate}",
-            "book appointment with {profession} on {appointmentDate}"
+            "appointment be scheduled with {profession}",
+            "appointment be booked with {profession}",
+            "schedule appointment with {profession}",
+            "book appointment with {profession} "
           ]
         },
         {
@@ -1099,17 +1028,11 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
-            },
-            {
-              "name": "appointmentDate",
-              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "appointment on {appointmentDate} with {profession} be cancelled",
-            "appointment with {profession} on {appointmentDate} be cancelled",
-            "cancel appointment with {profession} on {appointmentDate}",
-            "cancel appointment on {appointmentDate} with {profession}"
+            "appointment with {profession} be cancelled",
+            "cancel appointment with {profession} "
           ]
         },
         {
@@ -1118,17 +1041,13 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
-            },
-            {
-              "name": "dateOfAppointment",
-              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "appointment with {profession}  on {dateOfAppointment} be rescheduled",
-            "appointment on {dateOfAppointment} with {profession} be rescheduled",
-            "reschedule appointment on {dateOfAppointment} with {profession}",
-            "reschedule appointment with {profession} on {dateOfAppointment}"
+            "reschedule booking with {profession}",
+            "booking with {profession} be rescheduled",
+            "appointment with {profession}  be rescheduled",
+            "reschedule appointment with {profession}"
           ]
         },
         {
@@ -1147,9 +1066,9 @@ const model = {
           "slots": [],
           "samples": [
             "explain out of pocket",
-            "why not paid by insurance company",
-            "why not covered by insurance company",
-            "why I have to pay",
+            "explain not paid by insurance company",
+            "explain not covered by insurance company",
+            "explain why I have to pay",
             "explained last claim",
             "more details last claim",
             "explain out of pocket expenses",
@@ -1172,6 +1091,7 @@ const model = {
           "name": "GetMyPrescriptionDetails",
           "slots": [],
           "samples": [
+            "last prescription",
             "prescription detail",
             "prescription details",
             "details of prescription",
