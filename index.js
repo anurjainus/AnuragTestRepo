@@ -4,8 +4,10 @@
 const Alexa = require("ask-sdk");
 const https = require("https");
 
+var myLastPrescriptionDetails = require('./data/myLastPrescriptionDetails.json');
+var myRefillDates = require('./data/myRefillDates.json');
 
-
+console.log(myLastPrescriptionDetails);
 const invocationName = "optum health info";
 
 // Session Attributes 
@@ -201,7 +203,7 @@ const GetMyRefillDates_Handler =  {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-
+        console.log(myLastPrescriptionDetails);
         let say = 'Hello from GetMyRefillDates. ';
 
 
@@ -253,6 +255,29 @@ const ScheduleAppointment_Handler =  {
 
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','profession'), 'or');
+        }
+        //   SLOT: appointmentDate 
+        if (slotValues.appointmentDate.heardAs) {
+            slotStatus += ' slot appointmentDate was heard as ' + slotValues.appointmentDate.heardAs + '. ';
+        } else {
+            slotStatus += 'slot appointmentDate is empty. ';
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_MATCH') {
+            slotStatus += 'a valid ';
+            if(slotValues.appointmentDate.resolved !== slotValues.appointmentDate.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.appointmentDate.resolved + '. '; 
+                } else {
+                slotStatus += 'match. '
+            } // else {
+                //
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+            slotStatus += 'which did not match any slot value. ';
+            console.log('***** consider adding "' + slotValues.appointmentDate.heardAs + '" to the custom slot type used by slot appointmentDate! '); 
+        }
+
+        if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('ScheduleAppointment','appointmentDate'), 'or');
         }
 
         say += slotStatus;
@@ -327,6 +352,29 @@ const CancelAppointment_Handler =  {
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','profession'), 'or');
         }
+        //   SLOT: appointmentDate 
+        if (slotValues.appointmentDate.heardAs) {
+            slotStatus += ' slot appointmentDate was heard as ' + slotValues.appointmentDate.heardAs + '. ';
+        } else {
+            slotStatus += 'slot appointmentDate is empty. ';
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_MATCH') {
+            slotStatus += 'a valid ';
+            if(slotValues.appointmentDate.resolved !== slotValues.appointmentDate.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.appointmentDate.resolved + '. '; 
+                } else {
+                slotStatus += 'match. '
+            } // else {
+                //
+        }
+        if (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+            slotStatus += 'which did not match any slot value. ';
+            console.log('***** consider adding "' + slotValues.appointmentDate.heardAs + '" to the custom slot type used by slot appointmentDate! '); 
+        }
+
+        if( (slotValues.appointmentDate.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.appointmentDate.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('CancelAppointment','appointmentDate'), 'or');
+        }
 
         say += slotStatus;
 
@@ -380,6 +428,29 @@ const RescheduleAppointment_Handler =  {
         if( (slotValues.profession.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.profession.heardAs) ) {
             slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','profession'), 'or');
         }
+        //   SLOT: dateOfAppointment 
+        if (slotValues.dateOfAppointment.heardAs) {
+            slotStatus += ' slot dateOfAppointment was heard as ' + slotValues.dateOfAppointment.heardAs + '. ';
+        } else {
+            slotStatus += 'slot dateOfAppointment is empty. ';
+        }
+        if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_MATCH') {
+            slotStatus += 'a valid ';
+            if(slotValues.dateOfAppointment.resolved !== slotValues.dateOfAppointment.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.dateOfAppointment.resolved + '. '; 
+                } else {
+                slotStatus += 'match. '
+            } // else {
+                //
+        }
+        if (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') {
+            slotStatus += 'which did not match any slot value. ';
+            console.log('***** consider adding "' + slotValues.dateOfAppointment.heardAs + '" to the custom slot type used by slot dateOfAppointment! '); 
+        }
+
+        if( (slotValues.dateOfAppointment.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.dateOfAppointment.heardAs) ) {
+            slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('RescheduleAppointment','dateOfAppointment'), 'or');
+        }
 
         say += slotStatus;
 
@@ -391,17 +462,17 @@ const RescheduleAppointment_Handler =  {
     },
 };
 
-const GetMyLastClaimDetails_Handler =  {
+const GetMyClaimDetails_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetMyLastClaimDetails' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetMyClaimDetails' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyLastClaimDetails. ';
+        let say = 'Your last claim was paid on 07/26/2021 and the covered amount is $500.';
 
 
         return responseBuilder
@@ -411,17 +482,17 @@ const GetMyLastClaimDetails_Handler =  {
     },
 };
 
-const ExplainMyOutOfPocketExpenses_Handler =  {
+const ExplainMyOutOfPocketExpanses_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'ExplainMyOutOfPocketExpenses' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'ExplainMyOutOfPocketExpanses' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from ExplainMyOutOfPocketExpenses. ';
+        let say = 'The total claimed amount was $1400, deductible was $300, co-pay is $100 and Co-Insurance is 10%. So your Out Of Pocket Expanses was 500$.';
 
 
         return responseBuilder
@@ -431,18 +502,17 @@ const ExplainMyOutOfPocketExpenses_Handler =  {
     },
 };
 
-const GetMyHealthPlanDetails_Handler =  {
+const GetMyHealthPlanDetals_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetMyHealthPlanDetails' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetMyHealthPlanDetals' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyHealthPlanDetails. ';
-
+        let say = 'Your current plan is active and the plan renew date is 01/01/2023';
 
         return responseBuilder
             .speak(say)
@@ -451,17 +521,17 @@ const GetMyHealthPlanDetails_Handler =  {
     },
 };
 
-const GetMyPrescriptionDetails_Handler =  {
+const GetPrescriptionDetail_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'GetMyPrescriptionDetails' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'GetPrescriptionDetail' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'Hello from GetMyPrescriptionDetails. ';
+        let say = 'Hello from GetPrescriptionDetail. ';
 
 
         return responseBuilder
@@ -914,10 +984,10 @@ exports.handler = skillBuilder
         CheckScheduledAppointment_Handler, 
         CancelAppointment_Handler, 
         RescheduleAppointment_Handler, 
-        GetMyLastClaimDetails_Handler, 
-        ExplainMyOutOfPocketExpenses_Handler, 
-        GetMyHealthPlanDetails_Handler, 
-        GetMyPrescriptionDetails_Handler, 
+        GetMyClaimDetails_Handler, 
+        ExplainMyOutOfPocketExpanses_Handler, 
+        GetMyHealthPlanDetals_Handler, 
+        GetPrescriptionDetail_Handler, 
         LaunchRequest_Handler, 
         SessionEndedHandler
     )
@@ -1004,13 +1074,15 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
+            },
+            {
+              "name": "appointmentDate",
+              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "appointment be scheduled with {profession}",
-            "appointment be booked with {profession}",
-            "schedule appointment with {profession}",
-            "book appointment with {profession} "
+            "schedule appointment with {profession} on {appointmentDate}",
+            "book appointment with {profession} on {appointmentDate}"
           ]
         },
         {
@@ -1028,11 +1100,17 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
+            },
+            {
+              "name": "appointmentDate",
+              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "appointment with {profession} be cancelled",
-            "cancel appointment with {profession} "
+            "appointment on {appointmentDate} with {profession} be cancelled",
+            "appointment with {profession} on {appointmentDate} be cancelled",
+            "cancel appointment with {profession} on {appointmentDate}",
+            "cancel appointment on {appointmentDate} with {profession}"
           ]
         },
         {
@@ -1041,20 +1119,23 @@ const model = {
             {
               "name": "profession",
               "type": "AMAZON.ProfessionalType"
+            },
+            {
+              "name": "dateOfAppointment",
+              "type": "AMAZON.DATE"
             }
           ],
           "samples": [
-            "reschedule booking with {profession}",
-            "booking with {profession} be rescheduled",
-            "appointment with {profession}  be rescheduled",
-            "reschedule appointment with {profession}"
+            "appointment with {profession}  on {dateOfAppointment} be rescheduled",
+            "appointment on {dateOfAppointment} with {profession} be rescheduled",
+            "reschedule appointment on {dateOfAppointment} with {profession}",
+            "reschedule appointment with {profession} on {dateOfAppointment}"
           ]
         },
         {
-          "name": "GetMyLastClaimDetails",
+          "name": "GetMyClaimDetails",
           "slots": [],
           "samples": [
-            "detail last claim",
             "my last claim details",
             "charged in my last claim",
             "details on my last claim done",
@@ -1062,13 +1143,12 @@ const model = {
           ]
         },
         {
-          "name": "ExplainMyOutOfPocketExpenses",
+          "name": "ExplainMyOutOfPocketExpanses",
           "slots": [],
           "samples": [
-            "explain out of pocket",
-            "explain not paid by insurance company",
-            "explain not covered by insurance company",
-            "explain why I have to pay",
+            "why not paid by insurance company",
+            "why not covered by insurance company",
+            "why I have to pay",
             "explained last claim",
             "more details last claim",
             "explain out of pocket expenses",
@@ -1080,7 +1160,7 @@ const model = {
           ]
         },
         {
-          "name": "GetMyHealthPlanDetails",
+          "name": "GetMyHealthPlanDetals",
           "slots": [],
           "samples": [
             "health plan",
@@ -1088,10 +1168,9 @@ const model = {
           ]
         },
         {
-          "name": "GetMyPrescriptionDetails",
+          "name": "GetPrescriptionDetail",
           "slots": [],
           "samples": [
-            "last prescription",
             "prescription detail",
             "prescription details",
             "details of prescription",
